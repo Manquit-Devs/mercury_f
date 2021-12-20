@@ -10,7 +10,7 @@ const NavBar = () => {
 
   return (
     <AppBar
-      position="fixed"
+      position="sticky"
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Toolbar>

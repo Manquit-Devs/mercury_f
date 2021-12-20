@@ -9,7 +9,7 @@ import { NavBarContext } from '../context/navbar';
 
 const LeftBar = () => {
   const { isOpen, setIsOpen } = useContext(NavBarContext);
-  console.log(typeof setIsOpen);
+
   const renderListItems = () => (
     <>
       <ListItem>
@@ -51,17 +51,23 @@ const LeftBar = () => {
   const onCloseHandler = () => setIsOpen(false);
 
   return (
-    <>
-      <SwipeableDrawer
-        open={isOpen}
-        onOpen={onOpenHandler}
-        onClose={onCloseHandler}
-        variant="persistent"
-      >
-        <Toolbar />
-        <List>{renderListItems()}</List>
-      </SwipeableDrawer>
-    </>
+    <SwipeableDrawer
+      open={isOpen}
+      onOpen={onOpenHandler}
+      onClose={onCloseHandler}
+      variant="persistent"
+      sx={{
+        width: 200,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: 200,
+          boxSizing: 'border-box',
+        },
+      }}
+    >
+      <Toolbar />
+      <List>{renderListItems()}</List>
+    </SwipeableDrawer>
   );
 };
 

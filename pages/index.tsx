@@ -1,16 +1,21 @@
+import { Box } from '@mui/material';
 import type { NextPage } from 'next';
-import { Grid, CssBaseline } from '@mui/material';
+import { useContext } from 'react';
 import LeftBar from '../components/LeftBar';
+import Main from '../components/Main';
 import NavBar from '../components/NavBar';
+import { NavBarContext } from '../context/navbar';
 
 const Home: NextPage = () => {
+  const { isOpen, setIsOpen } = useContext(NavBarContext);
   return (
-    <Grid display="flex" flexDirection="column">
-      <Grid item xs={12}>
-        <NavBar />
+    <Box>
+      <NavBar />
+      <Box display="flex">
         <LeftBar />
-      </Grid>
-    </Grid>
+        <Main open={isOpen}>laulau</Main>
+      </Box>
+    </Box>
   );
 };
 
