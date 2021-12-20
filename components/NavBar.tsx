@@ -1,16 +1,18 @@
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button,
-} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { useContext } from 'react';
+import { NavBarContext } from '../context/navbar';
 
 const NavBar = () => {
+  const { isOpen, setIsOpen } = useContext(NavBarContext);
+
+  const onToggleMenuHandle = () => setIsOpen(!isOpen);
+
   return (
-    <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+    <AppBar
+      position="fixed"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <Toolbar>
         <IconButton
           size="large"
@@ -18,6 +20,7 @@ const NavBar = () => {
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}
+          onClick={onToggleMenuHandle}
         >
           <MenuIcon />
         </IconButton>

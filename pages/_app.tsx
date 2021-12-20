@@ -1,5 +1,7 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
+import { NavBarProvider } from '../context/navbar';
+
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 
 const darkTheme = createTheme({
@@ -11,8 +13,10 @@ const darkTheme = createTheme({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={darkTheme}>
-      <Component {...pageProps} />
-      <CssBaseline />
+      <NavBarProvider>
+        <Component {...pageProps} />
+        <CssBaseline />
+      </NavBarProvider>
     </ThemeProvider>
   );
 }
