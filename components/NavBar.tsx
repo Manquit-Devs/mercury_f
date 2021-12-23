@@ -1,7 +1,9 @@
 import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { NavBarContext } from '../context/navbar';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const NavBar = () => {
   const { isOpen, setIsOpen } = useContext(NavBarContext);
@@ -27,7 +29,13 @@ const NavBar = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           MERCURY
         </Typography>
-        <Button color="inherit">Login</Button>
+        <Button color="inherit">
+          <PersonIcon />
+          Alfred
+        </Button>
+        <IconButton>
+          <ExitToAppIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

@@ -9,7 +9,6 @@ import { NavBarContext } from '../context/navbar';
 
 const LeftBar = () => {
   const { isOpen, setIsOpen } = useContext(NavBarContext);
-
   const renderListItems = () => (
     <>
       <ListItem>
