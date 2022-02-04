@@ -1,30 +1,31 @@
+import AlarmAddIcon from '@mui/icons-material/AlarmAdd';
+import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import DoneIcon from '@mui/icons-material/Done';
 import ErrorIcon from '@mui/icons-material/Error';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import {
-  Box,
-  Table,
+  Box, Button, IconButton, Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
-  IconButton,
+  Tooltip
 } from '@mui/material';
-import type { NextPage } from 'next';
-import { useContext, useEffect, useState } from 'react';
-import LeftBar from '../components/LeftBar';
-import Main from '../components/Main';
-import NavBar from '../components/NavBar';
-import Spinner from '../components/Spinner';
-import { NavBarContext } from '../context/navbar';
-import { DeployGetBody, getDeploys, DeployBuildJSON } from '../services/deploy';
-import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
-import AlarmAddIcon from '@mui/icons-material/AlarmAdd';
 import moment from 'moment';
-
+import type { NextPage } from 'next';
+import Link from 'next/link';
+import { useContext, useEffect, useState } from 'react';
+import LeftBar from '../../components/LeftBar';
+import Main from '../../components/Main';
+import NavBar from '../../components/NavBar';
+import Spinner from '../../components/Spinner';
+import { NavBarContext } from '../../context/navbar';
+import {
+  DeployBuildJSON, DeployGetBody,
+  getDeploys
+} from '../../services/deploy';
 interface DeployTableProps {
   deploys: Array<DeployGetBody>;
 }
@@ -134,7 +135,7 @@ const DeployTable = ({ deploys }: DeployTableProps) => {
 };
 
 const Deploy: NextPage = () => {
-  const { isOpen, setIsOpen } = useContext(NavBarContext);
+  const { isOpen } = useContext(NavBarContext);
   const [isLoading, setIsLoading] = useState(false);
   const [deploys, setDeploys] = useState(Array<DeployGetBody>());
 
@@ -143,9 +144,10 @@ const Deploy: NextPage = () => {
       setIsLoading(true);
       const deploys = await getDeploys();
       setDeploys(deploys);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -159,7 +161,18 @@ const Deploy: NextPage = () => {
       <Box display="flex">
         <LeftBar />
         <Main open={isOpen}>
-          {isLoading ? <Spinner /> : <DeployTable deploys={deploys} />}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Box display="flex" flexDirection="column">
+              <Box alignSelf="flex-end">
+                <Link href="deploy/create" passHref>
+                  <Button variant="contained">Novo deploy</Button>
+                </Link>
+              </Box>
+              <DeployTable deploys={deploys} />
+            </Box>
+          )}
         </Main>
       </Box>
     </Box>
