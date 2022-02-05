@@ -19,6 +19,7 @@ export interface Row {
     columnsName: Array<string>;
     data: Array<string | number>;
   };
+  actions: React.ReactNode;
 }
 
 interface CollapsableTableProps {
@@ -26,7 +27,7 @@ interface CollapsableTableProps {
   rows: Array<Row>;
 }
 
-const Row = ({ data, innerTable }: Row) => {
+const Row = ({ data, innerTable, actions }: Row) => {
   const [isRowOpen, setIsRowOpen] = useState(false);
 
   const onToggleRowOpenHandler = () => setIsRowOpen(!isRowOpen);
@@ -47,9 +48,7 @@ const Row = ({ data, innerTable }: Row) => {
     <TableRow>
       {innerTable.data.map((item, key) => (
         <TableCell key={`row-data-${key}`} width="auto">
-          <Box sx={{ overflowWrap: 'break-word' }}>
-            {item}
-          </Box>
+          <Box sx={{ overflowWrap: 'break-word' }}>{item}</Box>
         </TableCell>
       ))}
     </TableRow>
@@ -68,6 +67,7 @@ const Row = ({ data, innerTable }: Row) => {
           </IconButton>
         </TableCell>
         {renderData}
+        {actions ? <TableCell>{actions}</TableCell> : null}
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -94,6 +94,7 @@ const CollapsableTable = ({ columnsName, rows }: CollapsableTableProps) => {
       {columnsName.map((columnName) => (
         <TableCell key={columnName}>{columnName}</TableCell>
       ))}
+      {rows.length > 0 && rows[0].actions ? <TableCell /> : null}
     </TableRow>
   );
 
