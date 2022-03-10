@@ -22,6 +22,8 @@ export interface DeployStepBody {
 export interface DeployCreateBody {
   name: string;
   description: string;
+  branch: string;
+  workingDirectory: string;
   steps: Array<DeployStepBody>;
 }
 
@@ -33,4 +35,8 @@ export interface DeployUpdateBody {
 export const getDeploys = async () => {
   const res = await api.get('/deploys');
   return res.data as Array<DeployGetBody>;
+};
+
+export const createDeploy = async (deploy: DeployCreateBody) => {
+  await api.post('/deploy', deploy);
 };

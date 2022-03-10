@@ -24,6 +24,10 @@ import { DeployStepJSON, getStepTypes } from '../../services/stepTypes';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { createDeploy } from '../../services/deploy';
+import SimpleBackdrop from '../../components/SimpleBackdrop';
+import { errorAlert, successAlert } from '../../utils/alertUtils';
+import { useRouter } from 'next/router';
 
 const CreateDeploy: NextPage = () => {
   const [name, setName] = useState('');
@@ -33,12 +37,14 @@ const CreateDeploy: NextPage = () => {
   const [actualStepName, setActualStepName] = useState('');
   const [actualStepType, setActualStepType] = useState(1);
   const [actualStepOrder, setActualStepOrder] = useState(0);
+  const [isStepTypesLoading, setIsStepTypesLoading] = useState(false);
+  const [isCreatingDeploy, setIsCreatingDeploy] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
   const [actualStepArgs, setActualStepArgs] = useState({} as StepCommand);
   const [steps, setSteps] = useState(Array<DeployStepJSON>());
   const [stepTypes, setStepTypes] = useState(Array<StepType>());
-  const [isStepTypesLoading, setIsStepTypesLoading] = useState(false);
   const { isOpen } = useContext(NavBarContext);
-
+  const router = useRouter();
   const stepsTableColumns = ['Nome', 'Tipo'];
 
   const fetchStepTypes = async () => {
@@ -81,6 +87,15 @@ const CreateDeploy: NextPage = () => {
     } as StepCommand);
   };
 
+  const isFormFilled = (
+    name: string,
+    workingDirectory: string,
+    branchName: string,
+    steps: Array<DeployStepJSON>
+  ) => {
+    return Boolean(name && workingDirectory && branchName && steps.length > 0);
+  };
+
   const sortStepByOrder = (step1: DeployStepJSON, step2: DeployStepJSON) =>
     Number(step1.order > step2.order);
 
@@ -88,7 +103,7 @@ const CreateDeploy: NextPage = () => {
     stepTypes.find((stepType) => stepType.id === id);
 
   const createRowActions = (rowOrder: number) => (
-    <>
+    <Box minWidth="155px">
       <IconButton onClick={() => moveStepUp(rowOrder)}>
         <ArrowDropUpIcon />
       </IconButton>
@@ -98,7 +113,7 @@ const CreateDeploy: NextPage = () => {
       <IconButton>
         <DeleteIcon onClick={() => removeStep(rowOrder)} />
       </IconButton>
-    </>
+    </Box>
   );
 
   const createStepTableRows = steps.sort(sortStepByOrder).map((step) => ({
@@ -131,6 +146,27 @@ const CreateDeploy: NextPage = () => {
     ]);
     setActualStepOrder(actualStepOrder + 1);
     clearStepFormFields();
+  };
+
+  const submitFormHandler = async () => {
+    try {
+      setIsCreatingDeploy(true);
+      await createDeploy({
+        name,
+        description,
+        branch: branchName,
+        workingDirectory,
+        steps,
+      });
+      successAlert('Deploy criado');
+      router.push('/deploy');
+    } catch (error) {
+      errorAlert('Não foi possivel criar o deploy');
+      console.log(error);
+    } finally {
+      setIsCreatingDeploy(false);
+    }
+    console.log(name, description, workingDirectory, branchName, steps);
   };
 
   const renderStepTypeArgsFields = () => {
@@ -187,7 +223,11 @@ const CreateDeploy: NextPage = () => {
             </RadioGroup>
           </FormControl>
           <Box>{renderStepTypeArgsFields()}</Box>
-          <Button variant="contained" onClick={addStepHandler}>
+          <Button
+            variant="contained"
+            onClick={addStepHandler}
+            disabled={!(actualStepName && actualStepArgs.command)}
+          >
             Adicionar passo
           </Button>
         </Box>
@@ -214,8 +254,14 @@ const CreateDeploy: NextPage = () => {
     fetchStepTypes();
   }, []);
 
+  useEffect(() => {
+    const isFormValid = isFormFilled(name, branchName, workingDirectory, steps);
+    setIsFormValid(isFormValid);
+  }, [name, branchName, workingDirectory, steps]);
+
   return (
     <Box>
+      <SimpleBackdrop open={isCreatingDeploy} />
       <NavBar />
       <Box display="flex">
         <LeftBar />
@@ -238,8 +284,9 @@ const CreateDeploy: NextPage = () => {
               label="Descrição"
               variant="filled"
               margin="dense"
+              maxRows={4}
               fullWidth
-              required
+              multiline
               onChange={(e) => setDescription(e.target.value)}
             />
             <TextField
@@ -273,11 +320,16 @@ const CreateDeploy: NextPage = () => {
               display="flex"
               justifyContent="center"
               width="100%"
-              my="20px"
+              my="10px"
               mx="auto"
             >
-              <Box width="100%" maxWidth="700px">
-                <Button variant="contained" fullWidth>
+              <Box width="100%" maxWidth="800px">
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disabled={!isFormValid}
+                  onClick={submitFormHandler}
+                >
                   Criar deploy
                 </Button>
               </Box>

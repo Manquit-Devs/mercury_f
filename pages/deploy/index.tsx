@@ -4,6 +4,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import ErrorIcon from '@mui/icons-material/Error';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import HandymanIcon from '@mui/icons-material/Handyman';
 import {
   Box, Button, IconButton, Table,
   TableBody,
@@ -92,6 +93,11 @@ const DeployTable = ({ deploys }: DeployTableProps) => {
       <Tooltip title="Agendar Build">
         <IconButton>
           <AlarmAddIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Executar Build">
+        <IconButton>
+          <HandymanIcon />
         </IconButton>
       </Tooltip>
     </Box>
