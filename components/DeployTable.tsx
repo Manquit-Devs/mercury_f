@@ -25,7 +25,7 @@ interface DeployTableProps {
 }
 
 const DeployTable = ({ deploys }: DeployTableProps) => {
-  const headers = ["Status", "Nome", "Última Build", "Ações"];
+  const headers = ["Status", "Name", "Last Build", "Actions"];
 
   const makeRowStatus = (rowBuilds: Array<DeployBuildJSON>) => {
     const rowBuild = rowBuilds[0];
@@ -78,17 +78,17 @@ const DeployTable = ({ deploys }: DeployTableProps) => {
 
   const makeRowActions = () => (
     <Box>
-      <Tooltip title="Configurar">
+      <Tooltip title="Settings">
         <IconButton>
           <DisplaySettingsIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Agendar Build">
+      <Tooltip title="Schedule Build">
         <IconButton>
           <AlarmAddIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Executar Build">
+      <Tooltip title="Run Build">
         <IconButton>
           <HandymanIcon />
         </IconButton>

@@ -43,7 +43,7 @@ const Deploy: NextPage = () => {
             <Box display="flex" flexDirection="column">
               <Box alignSelf="flex-end">
                 <Link href="deploy/create" passHref>
-                  <Button variant="contained">Novo deploy</Button>
+                  <Button variant="contained">New deploy setup</Button>
                 </Link>
               </Box>
               <DeployTable deploys={deploys} />

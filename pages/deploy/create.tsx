@@ -174,7 +174,7 @@ const CreateDeploy: NextPage = () => {
       case 1:
         return (
           <TextField
-            label="Comando"
+            label="Command"
             variant="filled"
             margin="dense"
             value={actualStepArgs.command}
@@ -195,10 +195,10 @@ const CreateDeploy: NextPage = () => {
     }
   };
 
-  const renderStepsForm = (
+  const stepsForm = (
     <>
       <TextField
-        label="Nome"
+        label="Name"
         value={actualStepName}
         variant="filled"
         margin="dense"
@@ -211,7 +211,7 @@ const CreateDeploy: NextPage = () => {
       ) : (
         <Box width="100%">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Tipo</FormLabel>
+            <FormLabel component="legend">Type</FormLabel>
             <RadioGroup
               aria-label="Tipo"
               defaultValue="1"
@@ -228,14 +228,14 @@ const CreateDeploy: NextPage = () => {
             onClick={addStepHandler}
             disabled={!(actualStepName && actualStepArgs.command)}
           >
-            Adicionar passo
+            Add Step
           </Button>
         </Box>
       )}
     </>
   );
 
-  const renderStepsTable = (
+  const stepsTable = (
     <Box mt="8px" height="100%">
       {steps.length > 0 ? (
         <CollapsableTable
@@ -244,7 +244,7 @@ const CreateDeploy: NextPage = () => {
         />
       ) : (
         <Box display="flex" justifyContent="center">
-          Adicione passos a build
+          Add steps to the build
         </Box>
       )}
     </Box>
@@ -267,11 +267,11 @@ const CreateDeploy: NextPage = () => {
         <LeftBar />
         <Main open={isOpen}>
           <Typography variant="h5" mb="20px">
-            Novo deploy
+            New Deploy
           </Typography>
           <form>
             <TextField
-              label="Nome"
+              label="Name"
               value={name}
               variant="filled"
               margin="dense"
@@ -281,7 +281,7 @@ const CreateDeploy: NextPage = () => {
             />
             <TextField
               value={description}
-              label="Descrição"
+              label="Description"
               variant="filled"
               margin="dense"
               maxRows={4}
@@ -290,7 +290,7 @@ const CreateDeploy: NextPage = () => {
               onChange={(e) => setDescription(e.target.value)}
             />
             <TextField
-              label="Diretório de trabalho"
+              label="Working Directory Path"
               value={workingDirectory}
               required
               variant="filled"
@@ -299,7 +299,7 @@ const CreateDeploy: NextPage = () => {
               onChange={(e) => setWorkingDirectory(e.target.value)}
             />
             <TextField
-              label="Nome da branch"
+              label="Branch's Name"
               value={branchName}
               required
               variant="filled"
@@ -307,13 +307,13 @@ const CreateDeploy: NextPage = () => {
               fullWidth
               onChange={(e) => setBranchName(e.target.value)}
             />
-            <Typography variant="h6">Passos da build</Typography>
+            <Typography variant="h6">Build Steps</Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} lg={5}>
-                {renderStepsForm}
+                {stepsForm}
               </Grid>
               <Grid item xs={12} lg={7}>
-                {renderStepsTable}
+                {stepsTable}
               </Grid>
             </Grid>
             <Box
@@ -330,7 +330,7 @@ const CreateDeploy: NextPage = () => {
                   disabled={!isFormValid}
                   onClick={submitFormHandler}
                 >
-                  Criar deploy
+                  Create Deploy
                 </Button>
               </Box>
             </Box>

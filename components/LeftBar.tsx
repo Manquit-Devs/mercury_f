@@ -23,7 +23,7 @@ const LeftBar = () => {
         <Link href="/queue" passHref>
           <a>
             <QueueIcon />
-            <Box ml={1}>Filas</Box>
+            <Box ml={1}>Queues</Box>
           </a>
         </Link>
       </ListItem>
@@ -31,7 +31,7 @@ const LeftBar = () => {
         <Link href="/users" passHref>
           <a>
             <SupervisedUserCircleIcon />
-            <Box ml={1}>Usuários</Box>
+            <Box ml={1}>Users</Box>
           </a>
         </Link>
       </ListItem>
@@ -39,7 +39,7 @@ const LeftBar = () => {
         <Link href="/settings" passHref>
           <a>
             <SettingsIcon />
-            <Box ml={1}>Configurações</Box>
+            <Box ml={1}>Settings</Box>
           </a>
         </Link>
       </ListItem>
