@@ -1,6 +1,6 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Button,
@@ -13,30 +13,30 @@ import {
   RadioGroup,
   TextField,
   Typography,
-} from "@mui/material";
-import type { NextPage } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import CollapsableTable from "../../components/CollapsableTable";
-import LeftBar from "../../components/LeftBar";
-import Main from "../../components/Main";
-import NavBar from "../../components/NavBar";
-import SimpleBackdrop from "../../components/SimpleBackdrop";
-import Spinner from "../../components/Spinner";
-import VerifyAuth from "../../components/VerifyAuth";
-import { NavBarContext } from "../../contexts/navbar";
-import { StepCommand, StepType } from "../../services/database";
-import { createDeploy } from "../../services/deploy";
-import { DeployStepJSON, getStepTypes } from "../../services/stepTypes";
-import { errorAlert, successAlert } from "../../utils/alertUtils";
+} from '@mui/material';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
+import CollapsableTable from '../../components/CollapsableTable';
+import LeftBar from '../../components/LeftBar';
+import Main from '../../components/Main';
+import NavBar from '../../components/NavBar';
+import SimpleBackdrop from '../../components/SimpleBackdrop';
+import Spinner from '../../components/Spinner';
+import VerifyAuth from '../../components/VerifyAuth';
+import { NavBarContext } from '../../contexts/navbar';
+import { StepCommand, StepType } from '../../services/database';
+import { createDeploy } from '../../services/deploy';
+import { DeployStepJSON, getStepTypes } from '../../services/stepTypes';
+import { errorAlert, successAlert } from '../../utils/alertUtils';
 
 const CreateDeploy: NextPage = () => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [workingDirectory, setWorkingDirectory] = useState("");
-  const [branchName, setBranchName] = useState("");
-  const [actualStepName, setActualStepName] = useState("");
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [workingDirectory, setWorkingDirectory] = useState('');
+  const [branchName, setBranchName] = useState('');
+  const [actualStepName, setActualStepName] = useState('');
   const [actualStepType, setActualStepType] = useState(1);
   const [actualStepOrder, setActualStepOrder] = useState(0);
   const [isStepTypesLoading, setIsStepTypesLoading] = useState(false);
@@ -47,7 +47,7 @@ const CreateDeploy: NextPage = () => {
   const [stepTypes, setStepTypes] = useState(Array<StepType>());
   const { isOpen } = useContext(NavBarContext);
   const router = useRouter();
-  const stepsTableColumns = ["Nome", "Tipo"];
+  const stepsTableColumns = ['Nome', 'Tipo'];
 
   const fetchStepTypes = async () => {
     try {
@@ -83,9 +83,9 @@ const CreateDeploy: NextPage = () => {
   };
 
   const clearStepFormFields = () => {
-    setActualStepName("");
+    setActualStepName('');
     setActualStepArgs({
-      command: "",
+      command: '',
     } as StepCommand);
   };
 
@@ -160,15 +160,13 @@ const CreateDeploy: NextPage = () => {
         workingDirectory,
         steps,
       });
-      successAlert("Deploy criado");
-      router.push("/deploy");
+      successAlert('Deploy created');
+      router.push('/deploy');
     } catch (error) {
-      errorAlert("Não foi possivel criar o deploy");
-      console.log(error);
+      errorAlert('Não foi possivel criar o deploy');
     } finally {
       setIsCreatingDeploy(false);
     }
-    console.log(name, description, workingDirectory, branchName, steps);
   };
 
   const renderStepTypeArgsFields = () => {
@@ -306,7 +304,7 @@ const CreateDeploy: NextPage = () => {
                 onChange={(e) => setWorkingDirectory(e.target.value)}
               />
               <TextField
-                label="Branch's Name"
+                label="Target Branch"
                 value={branchName}
                 required
                 variant="filled"

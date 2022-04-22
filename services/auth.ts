@@ -2,7 +2,8 @@ import { api, authApi } from './index';
 
 export const verifyToken = async () => {
   try { 
-    await api.get('/verifyToken');
+    const response = await api.get('/verifyToken');
+    return response.data.username;
   } catch (error) {
     throw error;
   }

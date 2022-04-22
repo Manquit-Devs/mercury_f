@@ -70,6 +70,7 @@ const Login: NextPage = () => {
 
           <Box
             component="form"
+            onSubmit={isFormValid ? onLoginHandler : () => {}}
             display="grid"
             gap="10px"
             width={{

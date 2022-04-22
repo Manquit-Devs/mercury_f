@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 
 export const successAlert = async (text: string, showConfirmButton = false) => {
   await Swal.fire({
-    title: 'Sucesso',
+    title: 'Success',
     text,
     icon: 'success',
     showConfirmButton: showConfirmButton,

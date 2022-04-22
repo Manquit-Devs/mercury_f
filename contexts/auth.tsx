@@ -25,7 +25,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const verifyUserToken = async () => {
     try {
       setIsLoadingUser(true);
-      await verifyToken();
+      const username = await verifyToken();
+      setUsername(username);
       setIsAuthenticated(true);
     } catch (error) {
       setIsAuthenticated(false);
@@ -39,7 +40,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       const passwordMd5 = md5(password);
       const { token } = await login(username, passwordMd5);
       Cookies.set('token', token);
-      setUsername(username);
       setIsAuthenticated(true);
     } catch (error) {
       setIsAuthenticated(false);

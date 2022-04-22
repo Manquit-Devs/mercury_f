@@ -1,16 +1,16 @@
-import { Box, Button } from "@mui/material";
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import DeployTable from "../../components/DeployTable";
-import LeftBar from "../../components/LeftBar";
-import Main from "../../components/Main";
-import NavBar from "../../components/NavBar";
-import Spinner from "../../components/Spinner";
-import VerifyAuth from "../../components/VerifyAuth";
-import { NavBarContext } from "../../contexts/navbar";
-import { DeployGetBody, getDeploys } from "../../services/deploy";
+import { Box, Button } from '@mui/material';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useContext, useEffect, useState } from 'react';
+import DeployTable from '../../components/DeployTable';
+import LeftBar from '../../components/LeftBar';
+import Main from '../../components/Main';
+import NavBar from '../../components/NavBar';
+import Spinner from '../../components/Spinner';
+import VerifyAuth from '../../components/VerifyAuth';
+import { NavBarContext } from '../../contexts/navbar';
+import { DeployGetBody, getDeploys } from '../../services/deploy';
 
 const Deploy: NextPage = () => {
   const { isOpen } = useContext(NavBarContext);
@@ -53,7 +53,7 @@ const Deploy: NextPage = () => {
                     <Button variant="contained">New deploy setup</Button>
                   </Link>
                 </Box>
-                <DeployTable deploys={deploys} />
+                <DeployTable deploys={deploys} reloadTable={fetchDeploys} />
               </Box>
             )}
           </Main>
