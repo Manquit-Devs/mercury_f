@@ -8,18 +8,21 @@ interface AuthProviderProps {
 }
 
 interface AuthContextData {
+  username: string;
   isAuthenticated: boolean;
   isLoadingUser: boolean;
   signUp: (username: string, password: string) => {};
+  signOut: () => {};
 }
 
 export const AuthContext = createContext({} as AuthContextData);
 
-const AuthProvider= ({ children }: AuthProviderProps) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [username, setUsername] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
 
-  const verifyUserToken = async( ) =>  {
+  const verifyUserToken = async () => {
     try {
       setIsLoadingUser(true);
       await verifyToken();
@@ -29,19 +32,25 @@ const AuthProvider= ({ children }: AuthProviderProps) => {
     } finally {
       setIsLoadingUser(false);
     }
-  }
+  };
 
-  async function signUp(username: string, password: string) {
+  const signUp = async (username: string, password: string) => {
     try {
       const passwordMd5 = md5(password);
-      const token = await login(username, passwordMd5);
+      const { token } = await login(username, passwordMd5);
       Cookies.set('token', token);
+      setUsername(username);
       setIsAuthenticated(true);
     } catch (error) {
       setIsAuthenticated(false);
       throw error;
-    } 
-  }
+    }
+  };
+
+  const signOut = async () => {
+    Cookies.remove('token');
+    setIsAuthenticated(false);
+  };
 
   useEffect(() => {
     verifyUserToken();
@@ -50,14 +59,16 @@ const AuthProvider= ({ children }: AuthProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
-        signUp,
+        username,
         isLoadingUser,
         isAuthenticated,
+        signOut,
+        signUp,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 export default AuthProvider;

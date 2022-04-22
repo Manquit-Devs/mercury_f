@@ -13,7 +13,7 @@ export const login = async (username: string, password: string) => {
     const response = await authApi.post("/login", {
       username, password
     });
-    return response.data.token;
+    return response.data;
   } catch (error) {
     throw error;
   }

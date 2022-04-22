@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import type { NextPage } from 'next';
+import Head from 'next/head';
 import { useContext } from 'react';
 import LeftBar from '../components/LeftBar';
 import Main from '../components/Main';
@@ -10,14 +11,19 @@ import { NavBarContext } from '../contexts/navbar';
 const Home: NextPage = () => {
   const { isOpen } = useContext(NavBarContext);
   return (
-    <Box>
-      <VerifyAuth />
-      <NavBar />
-      <Box display="flex">
-        <LeftBar />
-        <Main open={isOpen}>laulau</Main>
+    <>
+    <Head>
+      <title>Home page</title>
+    </Head>
+      <Box>
+        <VerifyAuth />
+        <NavBar />
+        <Box display="flex">
+          <LeftBar />
+          <Main open={isOpen}>laulau</Main>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

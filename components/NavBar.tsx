@@ -4,11 +4,17 @@ import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { NavBarContext } from '../contexts/navbar';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { AuthContext } from '../contexts/auth';
 
 const NavBar = () => {
   const { isOpen, setIsOpen } = useContext(NavBarContext);
-
+  const { username, signOut } = useContext(AuthContext);
+  
   const onToggleMenuHandle = () => setIsOpen(!isOpen);
+
+  const onLogoutHandler = () => {
+    signOut();
+  }
 
   return (
     <AppBar
@@ -31,9 +37,9 @@ const NavBar = () => {
         </Typography>
         <Button color="inherit">
           <PersonIcon />
-          Alfred
+          {username}
         </Button>
-        <IconButton>
+        <IconButton onClick={onLogoutHandler}>
           <ExitToAppIcon />
         </IconButton>
       </Toolbar>
