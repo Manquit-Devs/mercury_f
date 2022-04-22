@@ -5,7 +5,7 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Link from 'next/link';
 import { useContext } from 'react';
-import { NavBarContext } from '../context/navbar';
+import { NavBarContext } from '../contexts/navbar';
 
 const LeftBar = () => {
   const { isOpen, setIsOpen } = useContext(NavBarContext);

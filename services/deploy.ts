@@ -33,10 +33,18 @@ export interface DeployUpdateBody {
 }
 
 export const getDeploys = async () => {
-  const res = await api.get('/deploys');
-  return res.data as Array<DeployGetBody>;
+  try {
+    const res = await api.get('/deploys');
+    return res.data as Array<DeployGetBody>;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const createDeploy = async (deploy: DeployCreateBody) => {
-  await api.post('/deploy', deploy);
+  try {
+    await api.post('/deploy', deploy);
+  } catch (error) {
+    throw error;
+  }
 };

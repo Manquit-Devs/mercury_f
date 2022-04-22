@@ -4,12 +4,14 @@ import { useContext } from 'react';
 import LeftBar from '../components/LeftBar';
 import Main from '../components/Main';
 import NavBar from '../components/NavBar';
-import { NavBarContext } from '../context/navbar';
+import VerifyAuth from '../components/VerifyAuth';
+import { NavBarContext } from '../contexts/navbar';
 
 const Home: NextPage = () => {
-  const { isOpen, setIsOpen } = useContext(NavBarContext);
+  const { isOpen } = useContext(NavBarContext);
   return (
     <Box>
+      <VerifyAuth />
       <NavBar />
       <Box display="flex">
         <LeftBar />

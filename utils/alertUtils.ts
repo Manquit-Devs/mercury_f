@@ -1,21 +1,21 @@
 import Swal from 'sweetalert2';
 
-export const successAlert = async (text: string) => {
+export const successAlert = async (text: string, showConfirmButton = false) => {
   await Swal.fire({
     title: 'Sucesso',
     text,
     icon: 'success',
-    showConfirmButton: false,
-    timer: 4000,
+    showConfirmButton: showConfirmButton,
+    timer: showConfirmButton ? 0 : 5000,
   });
 };
 
-export const errorAlert = async (text: string) => {
+export const errorAlert = async (text: string, showConfirmButton = false) => {
   await Swal.fire({
     title: 'Error',
     text,
     icon: 'error',
-    showConfirmButton: false,
-    timer: 4000,
+    showConfirmButton: showConfirmButton,
+    timer: showConfirmButton ? 0 : 5000,
   });
 };

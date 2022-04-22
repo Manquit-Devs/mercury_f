@@ -1,3 +1,6 @@
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Button,
@@ -10,31 +13,30 @@ import {
   RadioGroup,
   TextField,
   Typography,
-} from '@mui/material';
-import type { NextPage } from 'next';
-import { useContext, useEffect, useState } from 'react';
-import CollapsableTable from '../../components/CollapsableTable';
-import LeftBar from '../../components/LeftBar';
-import Main from '../../components/Main';
-import NavBar from '../../components/NavBar';
-import Spinner from '../../components/Spinner';
-import { NavBarContext } from '../../context/navbar';
-import { StepCommand, StepType } from '../../services/database';
-import { DeployStepJSON, getStepTypes } from '../../services/stepTypes';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { createDeploy } from '../../services/deploy';
-import SimpleBackdrop from '../../components/SimpleBackdrop';
-import { errorAlert, successAlert } from '../../utils/alertUtils';
-import { useRouter } from 'next/router';
+} from "@mui/material";
+import type { NextPage } from "next";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import CollapsableTable from "../../components/CollapsableTable";
+import LeftBar from "../../components/LeftBar";
+import Main from "../../components/Main";
+import NavBar from "../../components/NavBar";
+import SimpleBackdrop from "../../components/SimpleBackdrop";
+import Spinner from "../../components/Spinner";
+import VerifyAuth from "../../components/VerifyAuth";
+import { NavBarContext } from "../../contexts/navbar";
+import { StepCommand, StepType } from "../../services/database";
+import { createDeploy } from "../../services/deploy";
+import { DeployStepJSON, getStepTypes } from "../../services/stepTypes";
+import { errorAlert, successAlert } from "../../utils/alertUtils";
 
 const CreateDeploy: NextPage = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [workingDirectory, setWorkingDirectory] = useState('');
-  const [branchName, setBranchName] = useState('');
-  const [actualStepName, setActualStepName] = useState('');
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [workingDirectory, setWorkingDirectory] = useState("");
+  const [branchName, setBranchName] = useState("");
+  const [actualStepName, setActualStepName] = useState("");
   const [actualStepType, setActualStepType] = useState(1);
   const [actualStepOrder, setActualStepOrder] = useState(0);
   const [isStepTypesLoading, setIsStepTypesLoading] = useState(false);
@@ -45,7 +47,7 @@ const CreateDeploy: NextPage = () => {
   const [stepTypes, setStepTypes] = useState(Array<StepType>());
   const { isOpen } = useContext(NavBarContext);
   const router = useRouter();
-  const stepsTableColumns = ['Nome', 'Tipo'];
+  const stepsTableColumns = ["Nome", "Tipo"];
 
   const fetchStepTypes = async () => {
     try {
@@ -81,9 +83,9 @@ const CreateDeploy: NextPage = () => {
   };
 
   const clearStepFormFields = () => {
-    setActualStepName('');
+    setActualStepName("");
     setActualStepArgs({
-      command: '',
+      command: "",
     } as StepCommand);
   };
 
@@ -158,10 +160,10 @@ const CreateDeploy: NextPage = () => {
         workingDirectory,
         steps,
       });
-      successAlert('Deploy criado');
-      router.push('/deploy');
+      successAlert("Deploy criado");
+      router.push("/deploy");
     } catch (error) {
-      errorAlert('Não foi possivel criar o deploy');
+      errorAlert("Não foi possivel criar o deploy");
       console.log(error);
     } finally {
       setIsCreatingDeploy(false);
@@ -260,84 +262,90 @@ const CreateDeploy: NextPage = () => {
   }, [name, branchName, workingDirectory, steps]);
 
   return (
-    <Box>
-      <SimpleBackdrop open={isCreatingDeploy} />
-      <NavBar />
-      <Box display="flex">
-        <LeftBar />
-        <Main open={isOpen}>
-          <Typography variant="h5" mb="20px">
-            New Deploy
-          </Typography>
-          <form>
-            <TextField
-              label="Name"
-              value={name}
-              variant="filled"
-              margin="dense"
-              required
-              fullWidth
-              onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-              value={description}
-              label="Description"
-              variant="filled"
-              margin="dense"
-              maxRows={4}
-              fullWidth
-              multiline
-              onChange={(e) => setDescription(e.target.value)}
-            />
-            <TextField
-              label="Working Directory Path"
-              value={workingDirectory}
-              required
-              variant="filled"
-              margin="dense"
-              fullWidth
-              onChange={(e) => setWorkingDirectory(e.target.value)}
-            />
-            <TextField
-              label="Branch's Name"
-              value={branchName}
-              required
-              variant="filled"
-              margin="dense"
-              fullWidth
-              onChange={(e) => setBranchName(e.target.value)}
-            />
-            <Typography variant="h6">Build Steps</Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12} lg={5}>
-                {stepsForm}
+    <>
+      <VerifyAuth />
+      <Head>
+        <title>Create deploy</title>
+      </Head>
+      <Box>
+        <SimpleBackdrop open={isCreatingDeploy} />
+        <NavBar />
+        <Box display="flex">
+          <LeftBar />
+          <Main open={isOpen}>
+            <Typography variant="h5" mb="20px">
+              New Deploy
+            </Typography>
+            <form>
+              <TextField
+                label="Name"
+                value={name}
+                variant="filled"
+                margin="dense"
+                required
+                fullWidth
+                onChange={(e) => setName(e.target.value)}
+              />
+              <TextField
+                value={description}
+                label="Description"
+                variant="filled"
+                margin="dense"
+                maxRows={4}
+                fullWidth
+                multiline
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <TextField
+                label="Working Directory Path"
+                value={workingDirectory}
+                required
+                variant="filled"
+                margin="dense"
+                fullWidth
+                onChange={(e) => setWorkingDirectory(e.target.value)}
+              />
+              <TextField
+                label="Branch's Name"
+                value={branchName}
+                required
+                variant="filled"
+                margin="dense"
+                fullWidth
+                onChange={(e) => setBranchName(e.target.value)}
+              />
+              <Typography variant="h6">Build Steps</Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} lg={5}>
+                  {stepsForm}
+                </Grid>
+                <Grid item xs={12} lg={7}>
+                  {stepsTable}
+                </Grid>
               </Grid>
-              <Grid item xs={12} lg={7}>
-                {stepsTable}
-              </Grid>
-            </Grid>
-            <Box
-              display="flex"
-              justifyContent="center"
-              width="100%"
-              my="10px"
-              mx="auto"
-            >
-              <Box width="100%" maxWidth="800px">
-                <Button
-                  variant="contained"
-                  fullWidth
-                  disabled={!isFormValid}
-                  onClick={submitFormHandler}
-                >
-                  Create Deploy
-                </Button>
+              <Box
+                display="flex"
+                justifyContent="center"
+                width="100%"
+                my="10px"
+                mx="auto"
+              >
+                <Box width="100%" maxWidth="800px">
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    disabled={!isFormValid}
+                    onClick={submitFormHandler}
+                  >
+                    Create Deploy
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-          </form>
-        </Main>
+            </form>
+          </Main>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { NavBarContext } from '../context/navbar';
+import { NavBarContext } from '../contexts/navbar';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const NavBar = () => {
