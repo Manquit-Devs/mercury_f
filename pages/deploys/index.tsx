@@ -62,7 +62,7 @@ const Deploy: NextPage = () => {
                       endIcon={<RefreshIcon />}
                       onClick={onRefreshTableHandler}
                     >
-                      Reload table
+                      Refresh table
                     </Button>
                     <Link href="deploys/create" passHref>
                       <Button variant="contained">New deploy setup</Button>

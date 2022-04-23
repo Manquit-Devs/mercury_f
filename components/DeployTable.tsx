@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import moment from 'moment';
 import { useMemo } from 'react';
+import { API_URL } from '../services';
 import {
   deleteDeployById,
   DeployBuildJSON,
@@ -31,8 +32,6 @@ interface DeployTableProps {
   deploys: Array<DeployGetBody>;
   reloadTable: () => {};
 }
-
-const API_URL = 'http://localhost:3333/api/deploy/build/run/github-webhook';
 
 const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
   const headers = ['Name', 'Last Build', 'URL', 'Actions'];
@@ -145,7 +144,7 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
     </Box>
   );
 
-  const makeRowUrl = (deployId: number, deploySecret: string) => `${API_URL}/${deployId}/${deploySecret}`;
+  const makeRowUrl = (deployId: number, deploySecret: string) => `${API_URL}/api/deploy/build/run/github-webhook/${deployId}/${deploySecret}`;
 
   const makeTableRow = (row: DeployGetBody, key: string) => (
     <TableRow key={key}>
