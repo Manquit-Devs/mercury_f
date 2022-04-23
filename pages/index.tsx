@@ -28,12 +28,7 @@ const Home: NextPage = () => {
         <Box display="flex">
           <LeftBar />
           <Main open={isOpen}>
-            Essa partida foi deveras fácil aconselho-lhes que treinem mais para
-            que possam ganhar futuramente algum dia, gostei do treino para
-            iniciantes, poderiam ter inserido o "FF" ou "/surrender" mais rápido
-            possível para que tamanha humilhação não fosse tão grande, espero
-            encontra-los logo mais para que eu possa ganhar mais CR e Evoluir meu
-            rank rapidamente.
+            Main
           </Main>
         </Box>
       </Box>

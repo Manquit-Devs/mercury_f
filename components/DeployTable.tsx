@@ -77,6 +77,7 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
           break;
         case 2:
           buildIcon = <HourglassTopIcon />;
+          break;
         case 3:
           buildIcon = <DoneIcon color="success" />;
           break;
