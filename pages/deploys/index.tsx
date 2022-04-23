@@ -1,4 +1,5 @@
-import { Box, Button } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import { Box, Button, Typography } from '@mui/material';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -29,6 +30,8 @@ const Deploy: NextPage = () => {
     }
   };
 
+  const onRefreshTableHandler = () => fetchDeploys();
+
   useEffect(() => {
     fetchDeploys();
   }, []);
@@ -48,12 +51,29 @@ const Deploy: NextPage = () => {
               <Spinner />
             ) : (
               <Box display="flex" flexDirection="column">
-                <Box alignSelf="flex-end">
-                  <Link href="deploy/create" passHref>
-                    <Button variant="contained">New deploy setup</Button>
-                  </Link>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Typography variant="h5">Deploys</Typography>
+                  <Box display="grid" gap="5px" gridTemplateColumns="1fr 1fr">
+                    <Button
+                      endIcon={<RefreshIcon />}
+                      onClick={onRefreshTableHandler}
+                    >
+                      Reload table
+                    </Button>
+                    <Link href="deploy/create" passHref>
+                      <Button variant="contained">New deploy setup</Button>
+                    </Link>
+                  </Box>
                 </Box>
-                <DeployTable deploys={deploys} reloadTable={fetchDeploys} />
+
+                <DeployTable
+                  deploys={deploys}
+                  reloadTable={onRefreshTableHandler}
+                />
               </Box>
             )}
           </Main>
