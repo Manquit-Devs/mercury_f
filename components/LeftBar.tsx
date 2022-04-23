@@ -19,29 +19,29 @@ const LeftBar = () => {
           </a>
         </Link>
       </ListItem>
-      <ListItem>
-        <Link href="/queue" passHref>
-          <a>
-            <QueueIcon />
-            <Box ml={1}>Queues</Box>
-          </a>
-        </Link>
+      <ListItem style={{ color: 'grey' }}>
+        {/* <Link href="/queue" passHref> */}
+        <a>
+          <QueueIcon />
+          <Box ml={1}>Queues</Box>
+        </a>
+        {/* </Link> */}
       </ListItem>
-      <ListItem>
-        <Link href="/users" passHref>
-          <a>
-            <SupervisedUserCircleIcon />
-            <Box ml={1}>Users</Box>
-          </a>
-        </Link>
+      <ListItem style={{ color: 'grey' }}>
+        {/* <Link href="/users" passHref> */}
+        <a>
+          <SupervisedUserCircleIcon />
+          <Box ml={1}>Users</Box>
+        </a>
+        {/* </Link> */}
       </ListItem>
-      <ListItem>
-        <Link href="/settings" passHref>
-          <a>
-            <SettingsIcon />
-            <Box ml={1}>Settings</Box>
-          </a>
-        </Link>
+      <ListItem style={{ color: 'grey' }}>
+        {/* <Link href="/settings" passHref> */}
+        <a>
+          <SettingsIcon />
+          <Box ml={1}>Settings</Box>
+        </a>
+        {/* </Link> */}
       </ListItem>
     </>
   );
