@@ -34,7 +34,7 @@ interface DeployTableProps {
 const API_URL = 'http://localhost:3333/api/deploy/github-webhook';
 
 const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
-  const headers = ['Status', 'Name', 'Last Build', 'URL', 'Actions'];
+  const headers = ['Name', 'Last Build', 'URL', 'Actions'];
 
   const deleteDeploy = async (deployId: number) => {
     try {
@@ -46,10 +46,8 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
     }
   };
 
-  const makeRowStatus = (rowBuilds: Array<DeployBuildJSON>) => {
-    const rowBuild = rowBuilds[0];
+  const makeRowLastBuildStatus = (rowBuild: DeployBuildJSON) => {
     let buildIcon = <></>;
-
     if (!rowBuild) {
       buildIcon = <WatchLaterIcon />;
     } else {
@@ -60,13 +58,13 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
         case 2:
           buildIcon = <HourglassTopIcon />;
         case 3:
-          buildIcon = <DoneIcon />;
+          buildIcon = <DoneIcon color="success" />;
           break;
         case 4:
-          buildIcon = <ErrorIcon />;
+          buildIcon = <ErrorIcon color="error" />;
           break;
         default:
-          buildIcon = <ErrorIcon />;
+          buildIcon = <ErrorIcon color="error" />;
           break;
       }
     }
@@ -77,19 +75,25 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
     );
   };
 
-  const makeRowBuild = (rowBuilds: Array<DeployBuildJSON>) => {
-    const rowBuild = rowBuilds[0];
+  const makeRowLastBuild = (rowBuilds: Array<DeployBuildJSON>) => {
+    const rowBuild = rowBuilds[rowBuilds.length - 1];
     if (!rowBuild) return <span>Sem builds</span>;
     return (
-      <Box>
-        <Box component="span" mr="5px">
-          {rowBuild.sender}
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <Box>
+          <Box component="span" mr="5px">
+            {rowBuild.sender}
+          </Box>
+          <Box component="span" bgcolor="#2b5eff" borderRadius="2px" p="4px">
+            #{rowBuild.commit}
+          </Box>
         </Box>
-        <Box component="span" bgcolor="#2b5eff" borderRadius="2px" p="4px">
-          #{rowBuild.commit}
-        </Box>
-        <Box mt="4px">
-          <b>{moment(rowBuild.date).format('MMM DD, YYYY [at] hh:mm')}</b>
+
+        <Box mt="10px" display="flex" alignItems="center">
+          <Box mr="10px">
+            <b>{moment(rowBuild.date).format('MMM DD, YYYY [at] hh:mm')}</b>
+          </Box>
+          {makeRowLastBuildStatus(rowBuild)}
         </Box>
       </Box>
     );
@@ -124,9 +128,8 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
 
   const makeTableRow = (row: DeployGetBody, key: string) => (
     <TableRow key={key}>
-      <TableCell align="center">{makeRowStatus(row.builds)}</TableCell>
       <TableCell align="center">{row.name}</TableCell>
-      <TableCell align="center">{makeRowBuild(row.builds)}</TableCell>
+      <TableCell align="center">{makeRowLastBuild(row.builds)}</TableCell>
       <TableCell align="center">{makeRowUrl(row.id)}</TableCell>
       <TableCell align="center">{makeRowActions(row.id)}</TableCell>
     </TableRow>
