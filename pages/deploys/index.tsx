@@ -64,7 +64,7 @@ const Deploy: NextPage = () => {
                     >
                       Reload table
                     </Button>
-                    <Link href="deploy/create" passHref>
+                    <Link href="deploys/create" passHref>
                       <Button variant="contained">New deploy setup</Button>
                     </Link>
                   </Box>

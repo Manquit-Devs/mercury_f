@@ -8,6 +8,7 @@ export interface DeployGetBody {
   name: string;
   description: string;
   steps: Array<DeployStepBody>;
+  secret: string;
   builds: Array<DeployBuild & BuildStatus>;
 }
 

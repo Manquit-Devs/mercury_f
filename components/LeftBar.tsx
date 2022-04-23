@@ -12,7 +12,7 @@ const LeftBar = () => {
   const renderListItems = () => (
     <>
       <ListItem>
-        <Link href="/deploy">
+        <Link href="/deploys">
           <a>
             <RocketLaunchIcon />
             <Box ml={1}>Deploys</Box>

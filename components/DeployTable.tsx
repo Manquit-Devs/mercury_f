@@ -32,7 +32,7 @@ interface DeployTableProps {
   reloadTable: () => {};
 }
 
-const API_URL = 'http://localhost:3333/api/deploy/github-webhook';
+const API_URL = 'http://localhost:3333/api/deploy/build/run/github-webhook';
 
 const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
   const headers = ['Name', 'Last Build', 'URL', 'Actions'];
@@ -145,13 +145,13 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
     </Box>
   );
 
-  const makeRowUrl = (deployId: number) => `${API_URL}/${deployId}`;
+  const makeRowUrl = (deployId: number, deploySecret: string) => `${API_URL}/${deployId}/${deploySecret}`;
 
   const makeTableRow = (row: DeployGetBody, key: string) => (
     <TableRow key={key}>
       <TableCell align="center">{row.name}</TableCell>
       <TableCell align="center">{makeRowLastBuild(row.builds)}</TableCell>
-      <TableCell align="center">{makeRowUrl(row.id)}</TableCell>
+      <TableCell align="center">{makeRowUrl(row.id, row.secret)}</TableCell>
       <TableCell align="center">{makeRowActions(row.id)}</TableCell>
     </TableRow>
   );

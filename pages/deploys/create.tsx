@@ -150,7 +150,7 @@ const CreateDeploy: NextPage = () => {
     clearStepFormFields();
   };
 
-  const submitFormHandler = async () => {
+  const onSubmitFormHandler = async () => {
     try {
       setIsCreatingDeploy(true);
       await createDeploy({
@@ -161,7 +161,7 @@ const CreateDeploy: NextPage = () => {
         steps,
       });
       successAlert('Deploy created');
-      router.push('/deploy');
+      router.push('/deploys');
     } catch (error) {
       errorAlert('Não foi possivel criar o deploy');
     } finally {
@@ -333,7 +333,7 @@ const CreateDeploy: NextPage = () => {
                     variant="contained"
                     fullWidth
                     disabled={!isFormValid}
-                    onClick={submitFormHandler}
+                    onClick={onSubmitFormHandler}
                   >
                     Create Deploy
                   </Button>
