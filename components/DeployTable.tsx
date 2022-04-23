@@ -15,16 +15,16 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip
+  Tooltip,
 } from '@mui/material';
 import moment from 'moment';
 import { useMemo } from 'react';
 import {
   deleteDeployById,
   DeployBuildJSON,
-  DeployGetBody
+  DeployGetBody,
 } from '../services/deploy';
-import { errorAlert, successAlert } from '../utils/alertUtils';
+import { confirmAlert, errorAlert, successAlert } from '../utils/alertUtils';
 
 interface DeployTableProps {
   deploys: Array<DeployGetBody>;
@@ -38,9 +38,14 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
 
   const deleteDeploy = async (deployId: number) => {
     try {
-      await deleteDeployById(deployId);
-      reloadTable();
-      await successAlert('Deploy deleted');
+      const confirm = await confirmAlert(
+        'Are you sure you want to delete this deploy?'
+      );
+      if (confirm.isConfirmed) {
+        await deleteDeployById(deployId);
+        reloadTable();
+        await successAlert('Deploy deleted');
+      }
     } catch (error) {
       await errorAlert('Failed to delete deploy');
     }
@@ -77,7 +82,7 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
 
   const makeRowLastBuild = (rowBuilds: Array<DeployBuildJSON>) => {
     const rowBuild = rowBuilds[rowBuilds.length - 1];
-    if (!rowBuild) return <span>Sem builds</span>;
+    if (!rowBuild) return <span>-</span>;
     return (
       <Box display="flex" flexDirection="column" alignItems="center">
         <Box>
@@ -102,12 +107,12 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
   const makeRowActions = (deployId: number) => (
     <Box>
       <Tooltip title="Settings">
-        <IconButton>
+        <IconButton disabled>
           <DisplaySettingsIcon />
         </IconButton>
       </Tooltip>
       <Tooltip title="Schedule Build">
-        <IconButton>
+        <IconButton disabled>
           <AlarmAddIcon />
         </IconButton>
       </Tooltip>
