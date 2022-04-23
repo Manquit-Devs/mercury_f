@@ -33,27 +33,19 @@ export interface DeployUpdateBody {
 }
 
 export const getDeploys = async () => {
-  try {
-    const res = await api.get('/deploys');
-    return res.data as Array<DeployGetBody>;
-  } catch (error) {
-    throw error;
-  }
+  const res = await api.get('/deploys');
+  return res.data as Array<DeployGetBody>;
 };
 
 export const createDeploy = async (deploy: DeployCreateBody) => {
-  try {
-    const response = await api.post('/deploy', deploy);
-    return response.data.deployId;
-  } catch (error) {
-    throw error;
-  }
+  const response = await api.post('/deploy', deploy);
+  return response.data.deployId;
 };
 
-export const deleteDeployById = async  (deployId: number) => {
-  try {
-    await api.delete(`/deploy/${deployId}`);
-  } catch (error) {
-    throw error;
-  }
-} 
+export const runDeployBuildById = async (deployId: number) => {
+  return api.post(`/deploy/build/run/${deployId}`);
+};
+
+export const deleteDeployById = async (deployId: number) => {
+  return api.delete(`/deploy/${deployId}`);
+};

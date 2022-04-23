@@ -23,6 +23,7 @@ import {
   deleteDeployById,
   DeployBuildJSON,
   DeployGetBody,
+  runDeployBuildById,
 } from '../services/deploy';
 import { confirmAlert, errorAlert, successAlert } from '../utils/alertUtils';
 
@@ -36,10 +37,25 @@ const API_URL = 'http://localhost:3333/api/deploy/github-webhook';
 const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
   const headers = ['Name', 'Last Build', 'URL', 'Actions'];
 
+  const runDeployBuild = async (deployId: number) => {
+    try {
+      const confirm = await confirmAlert(
+        'Are you sure that do you want to run build for this deploy?'
+      );
+      if (confirm.isConfirmed){
+        await runDeployBuildById(deployId);
+        reloadTable();
+        await successAlert('Deploy build put on queue to be executed');
+      }
+    } catch (error) {
+      await errorAlert('Failed to run deploy build');
+    }
+  }
+
   const deleteDeploy = async (deployId: number) => {
     try {
       const confirm = await confirmAlert(
-        'Are you sure you want to delete this deploy?'
+        'Are you sure that do you want to delete this deploy?'
       );
       if (confirm.isConfirmed) {
         await deleteDeployById(deployId);
@@ -117,7 +133,7 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
         </IconButton>
       </Tooltip>
       <Tooltip title="Run Build">
-        <IconButton>
+        <IconButton onClick={() => runDeployBuild(deployId)}>
           <HandymanIcon />
         </IconButton>
       </Tooltip>
