@@ -40,7 +40,7 @@ const Deploy: NextPage = () => {
     <>
       <VerifyAuth />
       <Head>
-        <title>Deploys list</title>
+        <title>Deploys</title>
       </Head>
       <Box>
         <NavBar />
