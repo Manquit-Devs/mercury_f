@@ -26,7 +26,7 @@ const Login: NextPage = () => {
         setIsLoading(true);
         await signUp(username, password);
       } catch (error) {
-        await errorAlert('Failed to sign up, check your username or password', true);
+        errorAlert('Failed to sign up, check your username or password', true);
       } finally{
         setIsLoading(false);
       }
