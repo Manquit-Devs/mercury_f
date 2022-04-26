@@ -112,7 +112,7 @@ const DeployTable = ({ deploys, reloadTable }: DeployTableProps) => {
 
         <Box mt="10px" display="flex" alignItems="center">
           <Box mr="10px">
-            <b>{moment(rowBuild.date).format('MMM DD, YYYY [at] hh:mm')}</b>
+            <b>{moment(rowBuild.date).format('MMM DD, YYYY [at] hh:mm a')}</b>
           </Box>
           {makeRowLastBuildStatus(rowBuild)}
         </Box>
